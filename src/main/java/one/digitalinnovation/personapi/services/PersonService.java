@@ -46,17 +46,26 @@ public class PersonService {
     public List<PersonDTO> listAll() {
         List<Person> allPeople = personRepository.findAll();
         return allPeople.stream()
-        .map(personMapper::toDTO)
+                .map(personMapper::toDTO)
                 .collect(Collectors.toList());
 
     }
 
     public PersonDTO findById(Long id) throws PersonNotFoundException {
-        Person person = personRepository.findById(id)
-                .orElseThrow(() -> new PersonNotFoundException(id));
+        Person person = VerifyIfExists(id);
 
         return personMapper.toDTO(person);
     }
 
-}
+    public void delete(Long id) throws PersonNotFoundException {
+        VerifyIfExists(id);
 
+        personRepository.deleteById(id);
+    }
+
+    private Person VerifyIfExists(Long id) throws PersonNotFoundException {
+        return personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+    }
+
+}
