@@ -2,6 +2,7 @@ package one.digitalinnovation.personapi.controllers;
 
 import lombok.AllArgsConstructor;
 //import one.digitalinnovation.personapi.dto.request.PersonDTO;
+import one.digitalinnovation.personapi.dto.request.PersonDTO;
 import one.digitalinnovation.personapi.dto.response.MessageResponseDTO;
 import one.digitalinnovation.personapi.entities.Person;
 //import one.digitalinnovation.personapi.exception.PersonNotFoundException;
@@ -37,8 +38,8 @@ public class PersonController {
 
    @PostMapping
    @ResponseStatus(HttpStatus.CREATED)
-   public MessageResponseDTO createPerson(@RequestBody Person person) {
-    return personService.createPerson(person);
+   public MessageResponseDTO createPerson(@RequestBody @Valid PersonDTO personDTO) {
+    return personService.createPerson(personDTO);
   }
 }
 
